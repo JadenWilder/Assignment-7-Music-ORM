@@ -1,6 +1,5 @@
-// Import database and model
+const { sequelize, Track } = require("./setup");
 
-// Seed data
 const sampleTracks = [
   {
     songTitle: "Bohemian Rhapsody",
@@ -8,7 +7,7 @@ const sampleTracks = [
     albumName: "A Night at the Opera",
     genre: "Rock",
     duration: 355,
-    releaseYear: 1975
+    releaseYear: 1975,
   },
   {
     songTitle: "Billie Jean",
@@ -16,7 +15,7 @@ const sampleTracks = [
     albumName: "Thriller",
     genre: "Pop",
     duration: 294,
-    releaseYear: 1982
+    releaseYear: 1982,
   },
   {
     songTitle: "Stairway to Heaven",
@@ -24,7 +23,7 @@ const sampleTracks = [
     albumName: "Led Zeppelin IV",
     genre: "Rock",
     duration: 482,
-    releaseYear: 1971
+    releaseYear: 1971,
   },
   {
     songTitle: "Imagine",
@@ -32,7 +31,7 @@ const sampleTracks = [
     albumName: "Imagine",
     genre: "Rock",
     duration: 183,
-    releaseYear: 1971
+    releaseYear: 1971,
   },
   {
     songTitle: "Like a Rolling Stone",
@@ -40,7 +39,7 @@ const sampleTracks = [
     albumName: "Highway 61 Revisited",
     genre: "Folk Rock",
     duration: 369,
-    releaseYear: 1965
+    releaseYear: 1965,
   },
   {
     songTitle: "What's Going On",
@@ -48,7 +47,7 @@ const sampleTracks = [
     albumName: "What's Going On",
     genre: "Soul",
     duration: 232,
-    releaseYear: 1971
+    releaseYear: 1971,
   },
   {
     songTitle: "Purple Haze",
@@ -56,7 +55,7 @@ const sampleTracks = [
     albumName: "Are You Experienced",
     genre: "Rock",
     duration: 167,
-    releaseYear: 1967
+    releaseYear: 1967,
   },
   {
     songTitle: "Respect",
@@ -64,7 +63,7 @@ const sampleTracks = [
     albumName: "I Never Loved a Man the Way I Love You",
     genre: "Soul",
     duration: 147,
-    releaseYear: 1967
+    releaseYear: 1967,
   },
   {
     songTitle: "Good Vibrations",
@@ -72,7 +71,7 @@ const sampleTracks = [
     albumName: "Pet Sounds",
     genre: "Pop",
     duration: 219,
-    releaseYear: 1966
+    releaseYear: 1966,
   },
   {
     songTitle: "Hey Jude",
@@ -80,7 +79,7 @@ const sampleTracks = [
     albumName: "Past Masters",
     genre: "Rock",
     duration: 431,
-    releaseYear: 1968
+    releaseYear: 1968,
   },
   {
     songTitle: "Smells Like Teen Spirit",
@@ -88,7 +87,7 @@ const sampleTracks = [
     albumName: "Nevermind",
     genre: "Grunge",
     duration: 301,
-    releaseYear: 1991
+    releaseYear: 1991,
   },
   {
     songTitle: "I Want to Hold Your Hand",
@@ -96,8 +95,23 @@ const sampleTracks = [
     albumName: "Meet the Beatles!",
     genre: "Rock",
     duration: 145,
-    releaseYear: 1963
-  }
+    releaseYear: 1963,
+  },
 ];
 
-// Seed database with sample data
+async function seedDatabase() {
+  try {
+    await sequelize.authenticate();
+    console.log("Database connection successful.");
+
+    await Track.bulkCreate(sampleTracks);
+    console.log("Sample tracks inserted successfully.");
+  } catch (error) {
+    console.error("Error seeding database:", error);
+  } finally {
+    await sequelize.close();
+    console.log("Database connection closed.");
+  }
+}
+
+seedDatabase();
